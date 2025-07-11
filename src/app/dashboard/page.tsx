@@ -61,9 +61,10 @@ export default function DashboardPage() {
         setLeads(prevLeads => prevLeads.filter(lead => lead.id !== id));
         showToast('Lead excluído com sucesso!', 'success'); // [!code ++]
 
-    } catch (err: any) {
-        showToast(`Erro: ${err.message}`, 'error'); // [!code ++]
-    }
+    } catch (err) { // Correção
+    const message = err instanceof Error ? err.message : String(err);
+    setError(message);
+}
   };
 
   const handleOpenEditModal = (lead: Lead) => {
@@ -96,9 +97,10 @@ export default function DashboardPage() {
         showToast('Lead atualizado com sucesso!', 'success'); // [!code ++]
         handleCloseModal();
 
-    } catch (err: any) {
-        showToast(`Erro: ${err.message}`, 'error'); // [!code ++]
-    }
+    } catch (err) { // Correção
+    const message = err instanceof Error ? err.message : String(err);
+    setError(message);
+}
   };
 
   if (isLoading) {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, MessageCircle, Minus, Plus } from 'lucide-react';
 import { Cart, UserData, Totals } from '../types';
 import FinalCartItem from './FinalCartItem';
@@ -80,14 +80,12 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
     }
     return message;
   }
-const saveBudgetToDatabase = async () => {
+const saveBudgetToDatabase = useCallback(async () => { // [!code ++]
     const budgetDetails = formatBudgetDetails();
     try {
-      const response = await fetch('/api/save-budget', { // [!code ++]
+      const response = await fetch('/api/save-budget', { 
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify({ email: userData.email, budgetDetails }),
       });
 
@@ -101,16 +99,18 @@ const saveBudgetToDatabase = async () => {
         showToast(`Erro ao salvar: ${errorResult.message || 'Verifique o console'}`, 'error');
       }
     } catch (error) {
-      console.error('Erro de rede ou ao conectar com a API:', error);
+      const message = error instanceof Error ? error.message : String(error);
+      console.error('Erro de rede ou ao conectar com a API:', message);
       showToast('Não foi possível conectar ao servidor. Verifique o console.', 'error');
     }
-  };
+}, [formatBudgetDetails, userData.email, showToast]); // [!code ++]
 
-  useEffect(() => {
+useEffect(() => {
   if (!totals.cartIsEmpty) {
     saveBudgetToDatabase();
   }
-}, [totals.cartIsEmpty, saveBudgetToDatabase]);
+}, [totals.cartIsEmpty, saveBudgetToDatabase]); // Adicione a função aqui
+
 
   const sendToWhatsApp = () => {
     const message = formatBudgetDetails();

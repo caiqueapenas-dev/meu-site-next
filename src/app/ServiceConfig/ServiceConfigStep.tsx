@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import { Cart } from '../types';
 import ServiceCard from './ServiceCard';
-import Modal from '../Modal/Modal';
 import InvestmentModal from '../Modals/InvestmentModal';
 import DetailsModal from '../Modals/DetailsModal';
 
@@ -16,8 +14,6 @@ interface ServiceConfigStepProps {
   serviceType: 'recorrente' | 'avulso';
   onCartUpdate: (serviceId: string, quantity: number) => void;
   onServiceTypeChange: (type: 'recorrente' | 'avulso') => void;
-  onNext: () => void;
-  onPrev: () => void;
   formatCurrency: (value: number) => string;
   calculateItemSubtotal: (service: any, quantity: number) => number;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
@@ -30,8 +26,6 @@ const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
   serviceType,
   onCartUpdate,
   onServiceTypeChange,
-  onNext,
-  onPrev,
   formatCurrency,
   calculateItemSubtotal,
   showToast

@@ -30,9 +30,10 @@ export default function LoginPage() {
 
       // Se o login for bem-sucedido, redireciona para o dashboard
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
+    } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    setError(message);
+} finally {
       setIsLoading(false);
     }
   };

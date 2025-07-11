@@ -10,13 +10,17 @@ export const useCalculator = () => {
   const [cart, setCart] = useState<Cart>({});
   const [serviceType, setServiceType] = useState<'recorrente' | 'avulso' | ''>('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  
+  // CORREÇÃO 1: Adicionado 'lgpdAccepted' ao estado inicial
   const [userData, setUserData] = useState<UserData>({
     name: '',
     email: '',
     phone: '',
     instagram: '',
-    field: ''
+    field: '',
+    lgpdAccepted: false 
   });
+
   const [discountState, setDiscountState] = useState<DiscountState>({
     applied: false,
     timerId: null
@@ -93,7 +97,7 @@ export const useCalculator = () => {
       finalFirstMonthPayment,
       cartIsEmpty: Object.keys(cart).length === 0
     };
-  }, [cart, serviceType, discountState.applied]);
+  }, [cart, serviceType, discountState.applied, calculateItemSubtotal]);
 
   const updateCart = (serviceId: string, quantity: number) => {
     setCart(prev => {
@@ -120,7 +124,8 @@ export const useCalculator = () => {
       email: '',
       phone: '',
       instagram: '',
-      field: ''
+      field: '',
+      lgpdAccepted: false
     });
     setDiscountState({
       applied: false,
@@ -136,12 +141,13 @@ export const useCalculator = () => {
       selectedCategories,
       discountState: {
         applied: discountState.applied,
-        timerId: null // Don't persist timer
+        timerId: null
       }
     };
     localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
   }, [cart, serviceType, userData, selectedCategories, discountState.applied]);
 
+  // CORREÇÃO 2: Estrutura da função loadSession ajustada
   const loadSession = useCallback((): boolean => {
     const savedSession = localStorage.getItem(SESSION_KEY);
     if (savedSession) {
@@ -149,7 +155,15 @@ export const useCalculator = () => {
         const parsedData = JSON.parse(savedSession);
         setCart(parsedData.cart || {});
         setServiceType(parsedData.serviceType || '');
-        setUserData(parsedData.userData || {});
+        setUserData({
+            name: '',
+            email: '',
+            phone: '',
+            instagram: '',
+            field: '',
+            lgpdAccepted: false,
+            ...(parsedData.userData || {}),
+        });
         setSelectedCategories(parsedData.selectedCategories || []);
         setDiscountState(parsedData.discountState || { applied: false, timerId: null });
         return true;
@@ -161,22 +175,18 @@ export const useCalculator = () => {
     return false;
   }, []);
 
-  // Auto-save session when data changes
   useEffect(() => {
     if (serviceType || Object.keys(cart).length > 0 || userData.name) {
       saveSession();
     }
-  }, [saveSession]);
+  }, [saveSession, serviceType, cart, userData.name]);
 
   return {
-    // State
     cart,
     serviceType,
     selectedCategories,
     userData,
     discountState,
-    
-    // Actions
     setServiceType,
     setSelectedCategories,
     setUserData,
@@ -184,11 +194,7 @@ export const useCalculator = () => {
     updateCart,
     clearSession,
     loadSession,
-    
-    // Computed
     totals: calculateTotals(),
-    
-    // Utilities
     formatCurrency,
     calculateProgressiveDiscount,
     findServiceById,
