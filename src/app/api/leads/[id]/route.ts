@@ -16,7 +16,7 @@ export async function DELETE(
   try {
     await connection.beginTransaction();
 
-    const [rows]: [any[], any] = await connection.execute('SELECT email FROM leads WHERE id = ?', [id]);
+    const [rows] = await connection.execute('SELECT email FROM leads WHERE id = ?', [id]) as [Array<{ email: string }>, unknown];
 
     if (rows.length === 0) {
       await connection.rollback();
