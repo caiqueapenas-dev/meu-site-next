@@ -3,10 +3,10 @@ import pool from '@/lib/db';
 
 export async function DELETE(
   request: Request,
-  context: { params: { id: string } } // Altere o nome do segundo argumento para 'context'
+  { params }: { params: { id: string } } // Ajuste aqui: desestruture params diretamente
 ) {
-  const id = context.params.id; // Acesse o id a partir de context.params
-  // ... o resto da função permanece igual ...
+  const id = params.id; // Acesse o id a partir de params
+
   if (!id) {
     return NextResponse.json({ message: 'ID do lead não fornecido.' }, { status: 400 });
   }
@@ -46,9 +46,9 @@ export async function DELETE(
 // Função para lidar com requisições PUT (Update)
 export async function PUT(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } } // Ajuste aqui: desestruture params diretamente
 ) {
-  const id = context.params.id;
+  const id = params.id; // Acesse o id a partir de params
 
   try {
     const body = await request.json();
@@ -62,8 +62,8 @@ export async function PUT(
     const connection = await pool.getConnection();
 
     const query = `
-      UPDATE leads 
-      SET name = ?, email = ?, phone = ?, instagram = ?, field = ? 
+      UPDATE leads
+      SET name = ?, email = ?, phone = ?, instagram = ?, field = ?
       WHERE id = ?
     `;
 
