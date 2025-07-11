@@ -9,6 +9,8 @@ interface CategorySelectionStepProps {
   selectedCategories: string[];
   onCategoriesChange: (categories: string[]) => void;
   onServiceTypeChange: (type: 'recorrente' | 'avulso') => void;
+  onNext: () => void;
+  onPrev: () => void;
 }
 
 const CategorySelectionStep: React.FC<CategorySelectionStepProps> = ({
@@ -21,6 +23,7 @@ const CategorySelectionStep: React.FC<CategorySelectionStepProps> = ({
     if (selectedCategories.includes(category)) {
       onCategoriesChange(selectedCategories.filter(c => c !== category));
     } else {
+      // CORREÇÃO: A variável correta é 'selectedCategories'
       onCategoriesChange([...selectedCategories, category]);
     }
   };

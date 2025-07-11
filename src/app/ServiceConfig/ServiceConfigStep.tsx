@@ -7,6 +7,7 @@ import ServiceCard from './ServiceCard';
 import InvestmentModal from '../Modals/InvestmentModal';
 import DetailsModal from '../Modals/DetailsModal';
 
+// A interface foi atualizada para incluir onNext e onPrev
 interface ServiceConfigStepProps {
   selectedCategories: string[];
   currentIndex: number;
@@ -17,6 +18,8 @@ interface ServiceConfigStepProps {
   formatCurrency: (value: number) => string;
   calculateItemSubtotal: (service: Service, quantity: number) => number;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
+  onNext: () => void;  // <-- Adicionado
+  onPrev: () => void;  // <-- Adicionado
 }
 
 const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
