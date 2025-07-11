@@ -1,26 +1,32 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+    /* A cor de fundo principal agora será aplicada diretamente nos elementos */
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Efeito de gradiente sutil no botão principal */
+  .cta-button {
+      @apply transition-all duration-300;
+      box-shadow: 0 4px 15px 0 rgba(4, 150, 255, 0.3);
+  }
+  .cta-button:hover {
+      @apply transform -translate-y-1;
+      box-shadow: 0 6px 20px 0 rgba(4, 150, 255, 0.4);
+  }
+  /* Efeito de destaque no botão secundário */
+  .secondary-cta-button:hover {
+      @apply scale-105 transition-transform duration-300;
+  }
+  .service-card:hover {
+      @apply -translate-y-1;
+      box-shadow: 0 8px 25px rgba(2, 43, 58, 0.15);
+  }
 }

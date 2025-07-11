@@ -1,0 +1,59 @@
+﻿├── public
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src
+│   └── app
+│       ├── BudgetSummary
+│       │   └── BudgetFooter.tsx
+│       ├── data
+│       │   └── services.ts
+│       ├── FinalBudget
+│       │   ├── FinalBudgetStep.tsx
+│       │   └── FinalCartItem.tsx
+│       ├── hooks
+│       │   ├── useCalculator.ts
+│       │   └── useToast.ts
+│       ├── marketing-budget
+│       │   └── page.tsx
+│       ├── Modal
+│       │   └── Modal.tsx
+│       ├── Modals
+│       │   ├── DetailsModal.tsx
+│       │   ├── DiscountModal.tsx
+│       │   └── InvestmentModal.tsx
+│       ├── politica-de-privacidade
+│       │   └── page.tsx
+│       ├── ServiceConfig
+│       │   ├── ServiceCard.tsx
+│       │   └── ServiceConfigStep.tsx
+│       ├── SessionRestore
+│       │   └── SessionRestoreModal.tsx
+│       ├── Steps
+│       │   ├── CategorySelectionStep.tsx
+│       │   ├── ServiceTypeStep.tsx
+│       │   ├── UserDataStep.tsx
+│       │   └── WelcomeStep.tsx
+│       ├── termos-de-uso
+│       │   └── page.tsx
+│       ├── Toast
+│       │   └── ToastContainer.tsx
+│       ├── types
+│       │   └── index.ts
+│       ├── favicon.ico
+│       ├── globals.css
+│       ├── layout.tsx
+│       └── page.tsx
+├── .gitignore
+├── arvore.txt
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── README.md
+├── tailwind.config.js
+└── tsconfig.json
