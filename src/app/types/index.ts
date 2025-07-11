@@ -55,3 +55,14 @@ export interface Totals {
   finalFirstMonthPayment: number;
   cartIsEmpty: boolean;
 }
+
+export interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  instagram: string;
+  field: string;
+  all_budgets?: string | null; // O '?' torna estes campos opcionais
+  all_dates?: string | null;
+}
