@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ArrowLeft, ArrowRight, Lock, RefreshCw } from 'lucide-react';
+import { Lock, RefreshCw } from 'lucide-react';
 import { services } from '../data/services';
 
 interface CategorySelectionStepProps {

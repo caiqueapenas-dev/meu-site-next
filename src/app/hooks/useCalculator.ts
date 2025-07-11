@@ -43,14 +43,16 @@ export const useCalculator = () => {
     return services.flatMap(cat => cat.items).find(item => item.id === id);
   };
 
-  const calculateItemSubtotal = (service: Service, quantity: number): number => {
+  
+
+  const calculateItemSubtotal = useCallback((service: Service, quantity: number): number => {
     if (!service || quantity === 0) return 0;
     let itemTotal = service.price * quantity;
     if (service.type === 'quantity') {
       itemTotal *= (1 - calculateProgressiveDiscount(quantity));
     }
     return itemTotal;
-  };
+  }, [calculateProgressiveDiscount]);
 
   const calculateTotals = useCallback((): Totals => {
     let initialTotal = 0;

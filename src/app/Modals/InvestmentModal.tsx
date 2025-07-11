@@ -43,7 +43,7 @@ const InvestmentModal: React.FC<InvestmentModalProps> = ({
   };
 
   const handleInputChange = (value: string) => {
-    let cleanValue = value.replace(/\D/g, '');
+    const cleanValue = value.replace(/\D/g, '');
     const numericValue = Number(cleanValue) / 100;
     
     updateFeedback(numericValue);

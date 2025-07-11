@@ -40,7 +40,7 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
 }) => {
   const [showDiscountModal, setShowDiscountModal] = useState(false);
 
-  const formatBudgetDetails = () => {
+  const formatBudgetDetails = useCallback(() => {
     let message = `*DADOS DO CLIENTE:*\n`;
     message += `Nome: ${userData.name || 'Não informado'}\n`;
     message += `E-mail: ${userData.email || 'Não informado'}\n`;
@@ -79,37 +79,16 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
       message += `*Mensalidade (a partir do 2º mês):* ${formatCurrency(totals.monthlyTotal)}`;
     }
     return message;
-  }
-const saveBudgetToDatabase = useCallback(async () => { // [!code ++]
-    const budgetDetails = formatBudgetDetails();
-    try {
-      const response = await fetch('/api/save-budget', { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        body: JSON.stringify({ email: userData.email, budgetDetails }),
-      });
+  }, [cart, userData, serviceType, totals, discountApplied, findServiceById, calculateItemSubtotal, formatCurrency]);
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Resposta da API:', result.message);
-      } else {
-        const errorResult = await response.json();
-        console.error('Falha ao salvar o orçamento:', errorResult.message);
-        console.error('Detalhes do erro do servidor:', errorResult.error);
-        showToast(`Erro ao salvar: ${errorResult.message || 'Verifique o console'}`, 'error');
-      }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      console.error('Erro de rede ou ao conectar com a API:', message);
-      showToast('Não foi possível conectar ao servidor. Verifique o console.', 'error');
+  const saveBudgetToDatabase = useCallback(async () => {
+    const budgetDetails = formatBudgetDetails();}, [formatBudgetDetails, userData.email, showToast]);
+
+  useEffect(() => {
+    if (!totals.cartIsEmpty) {
+      saveBudgetToDatabase();
     }
-}, [formatBudgetDetails, userData.email, showToast]); // [!code ++]
-
-useEffect(() => {
-  if (!totals.cartIsEmpty) {
-    saveBudgetToDatabase();
-  }
-}, [totals.cartIsEmpty, saveBudgetToDatabase]); // Adicione a função aqui
+  }, [totals.cartIsEmpty, saveBudgetToDatabase]);
 
 
   const sendToWhatsApp = () => {
