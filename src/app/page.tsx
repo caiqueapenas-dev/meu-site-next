@@ -157,7 +157,10 @@ export default function HomePage() {
                             <p className="text-gray-600 mt-3 max-w-3xl mx-auto">Enquanto agências atendem dezenas de clientes com a mesma fórmula, eu ofereço uma parceria profunda, personalizada e focada no seu resultado.</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                            <div className="bg-white p-6 rounded-lg shadow-md"><h4 className="font-bold text-xl text-[#022b3a] mb-2">Parceria Estratégica</h4><p className="text-gray-700">Você não terá um 'gerente de contas'. Você terá a mim, Carlos, um estrategista que mergulha no seu negócio, entende sua história e respeita seu tempo e investimento.</p></div>
+                            <div className="bg-white p-6 rounded-lg shadow-md"><h4 className="font-bold text-xl text-[#022b3a] mb-2">Parceria Estratégica</h4><p className="text-gray-700">
+  Você não terá um &#39;gerente de contas&#39;. Você terá a mim, Carlos, um estrategista que mergulha no seu negócio, entende sua história e respeita seu tempo e investimento.
+</p>
+</div>
                             <div className="bg-white p-6 rounded-lg shadow-md"><h4 className="font-bold text-xl text-[#022b3a] mb-2">Conformidade e Ética</h4><p className="text-gray-700">Atuo com total conhecimento das normas de publicidade para a área da saúde (CFM, CRO,  CFP, CRN, etc). Sua comunicação estará sempre ética, profissional e segura.</p></div>
                             <div className="bg-white p-6 rounded-lg shadow-md"><h4 className="font-bold text-xl text-[#022b3a] mb-2">Eficiência e Organização</h4><p className="text-gray-700">Minha filosofia é clara: organização gera produtividade. Otimizamos processos e eliminamos reuniões desnecessárias, para que seu tempo seja usado no que realmente importa.</p></div>
                         </div>
