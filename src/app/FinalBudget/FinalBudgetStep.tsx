@@ -83,7 +83,7 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
 const saveBudgetToDatabase = async () => {
     const budgetDetails = formatBudgetDetails();
     try {
-      const response = await fetch('/api/save-budget.php', { 
+      const response = await fetch('/api/save-budget', { // [!code ++]
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,61 +268,62 @@ const saveBudgetToDatabase = async () => {
           return null;
         })()}
         
+        
         {(() => {
-          const totalPosts = Object.entries(cart).reduce((total, [id, quantity]) => {
-            const serviceInfo = services
-              .flatMap(cat => cat.items.map(item => ({...item, categoryName: cat.category})))
-              .find(item => item.id === id);
+  const totalPosts = Object.entries(cart).reduce((total, [id, quantity]) => {
+    const serviceInfo = services
+      .flatMap(cat => cat.items.map(item => ({...item, categoryName: cat.category})))
+      .find(item => item.id === id);
 
-            if (serviceInfo && serviceInfo.type === 'quantity' && (serviceInfo.categoryName === 'Criação de Artes Gráficas' || serviceInfo.categoryName === 'Edição de Vídeo')) {
-              return total + quantity;
-            }
-            return total;
-          }, 0);
+    if (serviceInfo && serviceInfo.type === 'quantity' && (serviceInfo.categoryName === 'Criação de Artes Gráficas' || serviceInfo.categoryName === 'Edição de Vídeo')) {
+      return total + quantity;
+    }
+    return total;
+  }, 0);
 
-          if (serviceType !== 'recorrente' || totalPosts === 0) {
-            return null;
-          }
-          
-          const averageWeekly = totalPosts / 4;
-          
-          const getFeedback = (avg: number) => {
-            if (avg < 2) return { text: 'Volume muito baixo.', barColor: 'bg-red-500', tipColor: 'bg-red-500/10 text-red-400', tip: 'Uma frequência maior pode trazer resultados mais rápidos. Que tal adicionar mais alguns posts?' };
-            if (avg < 3) return { text: 'Volume baixo, mas um começo.', barColor: 'bg-orange-500', tipColor: 'bg-orange-500/10 text-orange-400', tip: 'Você está no caminho certo! Adicionar mais 1 ou 2 posts por semana pode acelerar seu crescimento.' };
-            if (avg < 4) return { text: 'Volume ideal para começar.', barColor: 'bg-yellow-500', tipColor: 'bg-yellow-500/10 text-yellow-300', tip: 'Excelente frequência para construir uma base sólida e engajar sua audiência de forma consistente.' };
-            if (avg < 5) return { text: 'Bom volume de postagens!', barColor: 'bg-green-500', tipColor: 'bg-green-500/10 text-green-400', tip: 'Com essa frequência, você se manterá relevante e presente para seu público.' };
-            return { text: 'Excelente volume, alta frequência!', barColor: 'bg-blue-500', tipColor: 'bg-blue-500/10 text-blue-300', tip: 'Plano de conteúdo robusto para dominar seu nicho e gerar autoridade máxima!' };
-          };
+  if (serviceType !== 'recorrente' || totalPosts === 0) {
+    return null;
+  }
 
-          const feedback = getFeedback(averageWeekly);
-          const barWidthPercentage = Math.min((averageWeekly / 5) * 100, 100);
+  const averageWeekly = totalPosts / 4;
 
-          return (
-            <div className="my-6 text-center bg-slate-900/50 p-4 rounded-lg border border-blue-500/30">
-              <h4 className="text-lg font-bold text-blue-300 mb-2">Resumo de Frequência</h4>
-              <p className="text-white text-xl">
-                Isso equivale a <span className="font-bold text-2xl">{averageWeekly.toFixed(1).replace('.0', '')}</span> posts por semana, em média.
-              </p>
-              
-              <div className="w-full h-3 rounded-full bg-slate-700 my-3 overflow-hidden">
-                 <div 
-                    className={`h-full rounded-full ${feedback.barColor} transition-all duration-500`}
-                    style={{ width: `${barWidthPercentage}%` }}
-                  ></div>
-              </div>
-              
-              <p className={`text-center text-sm font-semibold h-5`}>
-                {feedback.text}
-              </p>
-              
-              {averageWeekly < 5 && (
-                <div className={`mt-3 text-xs p-2 rounded-md ${feedback.tipColor}`}>
-                   <span className="font-bold">Dica:</span> {feedback.tip}
-                </div>
-              )}
-            </div>
-          );
-        })()}
+  const getFeedback = (avg: number) => {
+    if (avg < 2) return { text: 'Volume muito baixo.', barColor: 'bg-red-500', tipColor: 'bg-red-500/10 text-red-400', tip: 'Uma frequência maior pode trazer resultados mais rápidos. Que tal adicionar mais alguns posts?' };
+    if (avg < 3) return { text: 'Volume baixo, mas um começo.', barColor: 'bg-orange-500', tipColor: 'bg-orange-500/10 text-orange-400', tip: 'Você está no caminho certo! Adicionar mais 1 ou 2 posts por semana pode acelerar seu crescimento.' };
+    if (avg < 4) return { text: 'Volume ideal para começar.', barColor: 'bg-yellow-500', tipColor: 'bg-yellow-500/10 text-yellow-300', tip: 'Excelente frequência para construir uma base sólida e engajar sua audiência de forma consistente.' };
+    if (avg < 5) return { text: 'Bom volume de postagens!', barColor: 'bg-green-500', tipColor: 'bg-green-500/10 text-green-400', tip: 'Com essa frequência, você se manterá relevante e presente para seu público.' };
+    return { text: 'Excelente volume, alta frequência!', barColor: 'bg-blue-500', tipColor: 'bg-blue-500/10 text-blue-300', tip: 'Plano de conteúdo robusto para dominar seu nicho e gerar autoridade máxima!' };
+  };
+
+  const feedback = getFeedback(averageWeekly);
+  const barWidthPercentage = Math.min((averageWeekly / 5) * 100, 100);
+
+  return (
+    <div className="my-6 text-center bg-slate-900/50 p-4 rounded-lg border border-blue-500/30">
+      <h4 className="text-lg font-bold text-blue-300 mb-2">Resumo de Frequência</h4>
+      <p className="text-white text-xl">
+        Isso equivale a <span className="font-bold text-2xl">{averageWeekly.toFixed(1).replace('.0', '')}</span> posts por semana, em média.
+      </p>
+
+      <div className="w-full h-3 rounded-full bg-slate-700 my-3 overflow-hidden">
+         <div 
+            className={`h-full rounded-full ${feedback.barColor} transition-all duration-500`}
+            style={{ width: `${barWidthPercentage}%` }}
+          ></div>
+      </div>
+
+      <p className={`text-center text-sm font-semibold h-5`}>
+        {feedback.text}
+      </p>
+
+      {averageWeekly < 5 && (
+        <div className={`mt-3 text-xs p-2 rounded-md ${feedback.tipColor}`}>
+           <span className="font-bold">Dica:</span> {feedback.tip}
+        </div>
+      )}
+    </div>
+  );
+})()}
 
         {/* Totals */}
         <div className="border-t-2 border-slate-600 pt-6 space-y-3">

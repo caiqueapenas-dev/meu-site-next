@@ -89,7 +89,7 @@ const UserDataStep: React.FC<UserDataStepProps> = ({
 
     try {
       // A URL da API deve ser absoluta ou configurada com proxy no next.config.js
-      const apiUrl = '/api/save-lead.php'; 
+      const apiUrl = '/api/save-lead';
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {

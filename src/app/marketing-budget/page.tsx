@@ -47,18 +47,24 @@ export default function MarketingBudgetPage() {
 
   // Controla o passo atual com base no parâmetro da URL
   useEffect(() => {
-    const stepParam = searchParams.get('step');
-    const step = stepParam ? parseInt(stepParam) : 0;
-    setCurrentStep(step);
+  const hasSession = loadSession();
+  // Se estamos no início e há uma sessão, mostramos o modal para o usuário decidir
+  if (hasSession && !searchParams.get('step')) {
+    setShowSessionRestore(true);
+  }
+// AVISO: As dependências 'loadSession' e 'searchParams' foram omitidas intencionalmente
+// para garantir que este hook execute apenas uma vez na montagem inicial.
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
 
-    // Só tenta restaurar sessão se estiver no passo inicial
-    if (step === 0) {
-      const hasSession = loadSession();
-      if (hasSession) {
-        setShowSessionRestore(true);
-      }
-    }
-  }, [searchParams, loadSession]);
+// Controla o passo atual com base no parâmetro da URL
+useEffect(() => {
+  const stepParam = searchParams.get('step');
+  const step = stepParam ? parseInt(stepParam) : 0;
+  // Não zera o passo se houver uma sessão restaurada e nenhum passo na URL.
+  if (showSessionRestore) return;
+  setCurrentStep(step);
+}, [searchParams, showSessionRestore]);
 
   useEffect(() => {
     window.scrollTo({
