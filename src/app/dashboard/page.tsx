@@ -31,8 +31,9 @@ export default function DashboardPage() {
       }
       const data = await response.json();
       setLeads(data);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) { // [!code ++]
+    const message = err instanceof Error ? err.message : String(err); // [!code ++]
+    setError(message); // [!code ++]
     } finally {
       setIsLoading(false);
     }
