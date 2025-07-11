@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, MessageCircle, Minus, Plus } from 'lucide-react';
-import { Cart, UserData, Totals } from '../types';
+import { Cart, UserData, Totals, Service } from '../types';
 import FinalCartItem from './FinalCartItem';
 import DiscountModal from '../Modals/DiscountModal';
 import { services } from '../data/services';
@@ -18,8 +18,8 @@ interface FinalBudgetStepProps {
   onApplyDiscount: () => void;
   onCancelOrder: () => void;
   formatCurrency: (value: number) => string;
-  findServiceById: (id: string) => any;
-  calculateItemSubtotal: (service: any, quantity: number) => number;
+  findServiceById: (id: string) => Service | undefined;
+  calculateItemSubtotal: (service: Service, quantity: number) => number;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
 }
 
@@ -50,13 +50,13 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
     message += `*SERVIÇOS SOLICITADOS (${serviceType === 'recorrente' ? 'Plano Recorrente' : 'Serviço Avulso'}):*\n`;
 
     Object.entries(cart).sort((a,b) => a[0].localeCompare(b[0])).forEach(([id, value]) => {
-      let service, itemTotal, name;
+      let itemTotal: number, name: string;
       if (id === 'trafego_investimento_custom') {
-        service = { name: 'Investimento em Anúncios' };
         itemTotal = value;
-        name = service.name;
+        name = 'Investimento em Anúncios';
       } else {
-        service = findServiceById(id);
+        const service = findServiceById(id);
+        if (!service) return;
         itemTotal = calculateItemSubtotal(service, value);
         name = service.type === 'quantity' ? `${service.name} (Qtd: ${value})` : service.name;
       }
@@ -82,7 +82,10 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
   }, [cart, userData, serviceType, totals, discountApplied, findServiceById, calculateItemSubtotal, formatCurrency]);
 
   const saveBudgetToDatabase = useCallback(async () => {
-    const budgetDetails = formatBudgetDetails();}, [formatBudgetDetails, userData.email, showToast]);
+    const budgetDetails = formatBudgetDetails();
+    // Database save logic would go here
+    console.log('Budget details:', budgetDetails);
+  }, [formatBudgetDetails]);
 
   useEffect(() => {
     if (!totals.cartIsEmpty) {
@@ -113,13 +116,13 @@ const FinalBudgetStep: React.FC<FinalBudgetStepProps> = ({
     onCancelOrder();
   };
 
-  const oneTimeItems: any[] = [];
-  const recurringItems: any[] = [];
+  const oneTimeItems: Array<{ id: string; value: number }> = [];
+  const recurringItems: Array<{ id: string; value: number }> = [];
 
   Object.entries(cart).forEach(([id, value]) => {
     if (value === 0) return;
     
-    let isMonthly;
+    let isMonthly: boolean;
     if (id === 'trafego_investimento_custom') {
       isMonthly = serviceType === 'recorrente';
     } else {

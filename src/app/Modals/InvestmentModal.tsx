@@ -7,14 +7,12 @@ interface InvestmentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (investment: number) => void;
-  formatCurrency: (value: number) => string;
 }
 
 const InvestmentModal: React.FC<InvestmentModalProps> = ({
   isOpen,
   onClose,
-  onConfirm,
-  formatCurrency
+  onConfirm
 }) => {
   const [investmentValue, setInvestmentValue] = useState('');
   const [feedback, setFeedback] = useState('');

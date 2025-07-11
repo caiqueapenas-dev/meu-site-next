@@ -9,17 +9,13 @@ interface CategorySelectionStepProps {
   selectedCategories: string[];
   onCategoriesChange: (categories: string[]) => void;
   onServiceTypeChange: (type: 'recorrente' | 'avulso') => void;
-  onNext: () => void;
-  onPrev: () => void;
 }
 
 const CategorySelectionStep: React.FC<CategorySelectionStepProps> = ({
   serviceType,
   selectedCategories,
   onCategoriesChange,
-  onServiceTypeChange,
-  onNext,
-  onPrev
+  onServiceTypeChange
 }) => {
   const toggleCategory = (category: string) => {
     if (selectedCategories.includes(category)) {

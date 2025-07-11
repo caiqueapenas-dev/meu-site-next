@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       // Credenciais incorretas
       return NextResponse.json({ message: 'Nome de usuário ou senha incorretos.' }, { status: 401 });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: 'Erro no servidor.' }, { status: 500 });
   }
 }

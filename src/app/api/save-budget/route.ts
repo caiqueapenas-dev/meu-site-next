@@ -17,11 +17,11 @@ export async function POST(request: Request) {
     const [result] = await connection.execute(
           'INSERT INTO budgets (user_email, budget_details) VALUES (?, ?)', // [!code ++]
           [email, budgetDetails]
-        );
+        ) as [{ insertId: number }, unknown];
 
     connection.release();
 
-    return NextResponse.json({ message: 'Orçamento salvo com sucesso!', budgetId: (result as any).insertId }, { status: 201 });
+    return NextResponse.json({ message: 'Orçamento salvo com sucesso!', budgetId: result.insertId }, { status: 201 });
 
   } catch (error) {
     console.error('Erro na API /api/save-budget:', error);

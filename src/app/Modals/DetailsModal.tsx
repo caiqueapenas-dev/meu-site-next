@@ -3,11 +3,12 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import Modal from '../Modal/Modal';
+import { Service } from '../types';
 
 interface DetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  service: any;
+  service: Service | null;
 }
 
 const DetailsModal: React.FC<DetailsModalProps> = ({ isOpen, onClose, service }) => {

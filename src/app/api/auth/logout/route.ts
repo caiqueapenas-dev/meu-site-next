@@ -1,6 +1,5 @@
 // src/app/api/auth/logout/route.ts
 import { serialize } from 'cookie';
-import { NextResponse } from 'next/server';
 
 export async function POST() {
   // Cria um cookie que expira no passado para removê-lo

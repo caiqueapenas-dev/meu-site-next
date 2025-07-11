@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, Users2, Palette, Film, MousePointerClick, MapPin, MonitorSmartphone, ShieldCheck, Target, Rocket, Plus, Minus } from 'lucide-react';
 
 // Componente para o Acordeão do FAQ
@@ -193,7 +194,7 @@ export default function HomePage() {
                         <div className="grid md:grid-cols-2 gap-12 items-center">
                             <div className="flex justify-center">
                                 {/* As imagens na pasta public são servidas a partir da raiz */}
-                                <img src="/IMG_3875.jpg" alt="Foto de Carlos Henrique" className="rounded-lg shadow-xl w-full max-w-sm object-cover"/>
+                                <Image src="/IMG_3875.jpg" alt="Foto de Carlos Henrique" width={400} height={400} className="rounded-lg shadow-xl w-full max-w-sm object-cover"/>
                             </div>
                             <div className="text-[#022b3a]">
                                 <h3 className="text-3xl font-bold mb-4">Mais que um prestador de serviços, um parceiro de negócio.</h3>

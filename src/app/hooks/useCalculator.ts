@@ -33,11 +33,11 @@ export const useCalculator = () => {
     }).format(value);
   };
 
-  const calculateProgressiveDiscount = (quantity: number): number => {
+  const calculateProgressiveDiscount = useCallback((quantity: number): number => {
     if (quantity <= 1) return 0;
     if (quantity >= 10) return 0.20;
     return ((quantity - 1) / 9) * 0.20;
-  };
+  }, []);
 
   const findServiceById = (id: string): Service | undefined => {
     return services.flatMap(cat => cat.items).find(item => item.id === id);

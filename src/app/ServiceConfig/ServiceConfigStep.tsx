@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { services } from '../data/services';
-import { Cart } from '../types';
+import { Cart, Service } from '../types';
 import ServiceCard from './ServiceCard';
 import InvestmentModal from '../Modals/InvestmentModal';
 import DetailsModal from '../Modals/DetailsModal';
@@ -15,7 +15,7 @@ interface ServiceConfigStepProps {
   onCartUpdate: (serviceId: string, quantity: number) => void;
   onServiceTypeChange: (type: 'recorrente' | 'avulso') => void;
   formatCurrency: (value: number) => string;
-  calculateItemSubtotal: (service: any, quantity: number) => number;
+  calculateItemSubtotal: (service: Service, quantity: number) => number;
   showToast: (message: string, type?: 'success' | 'info' | 'error') => void;
 }
 
@@ -32,7 +32,7 @@ const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
 }) => {
   const [showInvestmentModal, setShowInvestmentModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [selectedService, setSelectedService] = useState<any>(null);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   const categoryName = selectedCategories[currentIndex];
   const category = services.find(s => s.category === categoryName);
@@ -71,7 +71,7 @@ const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
     showToast('Serviço de Tráfego Adicionado!');
   };
 
-  const handleShowDetails = (service: any) => {
+  const handleShowDetails = (service: Service) => {
     setSelectedService(service);
     setShowDetailsModal(true);
   };
@@ -81,7 +81,6 @@ const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
     showToast('Alterado para Plano Recorrente', 'info');
   };
 
-  const isLastStep = currentIndex === selectedCategories.length - 1;
 
   return (
     <div className="animate-in fade-in duration-600">
@@ -126,7 +125,6 @@ const ServiceConfigStep: React.FC<ServiceConfigStepProps> = ({
         isOpen={showInvestmentModal}
         onClose={() => setShowInvestmentModal(false)}
         onConfirm={handleInvestmentConfirm}
-        formatCurrency={formatCurrency}
       />
 
       <DetailsModal

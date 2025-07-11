@@ -18,11 +18,11 @@ export async function POST(request: Request) {
     const [result] = await connection.execute(
       'INSERT INTO leads (name, email, phone, instagram, field) VALUES (?, ?, ?, ?, ?)',
       [name, email, phone, instagram || null, field] // Usa null se o instagram não for preenchido
-    );
+    ) as [{ insertId: number }, unknown];
 
     connection.release(); // Libera a conexão de volta para o pool
 
-    return NextResponse.json({ message: 'Lead salvo com sucesso!', leadId: (result as any).insertId }, { status: 201 });
+    return NextResponse.json({ message: 'Lead salvo com sucesso!', leadId: result.insertId }, { status: 201 });
 
   } catch (error) {
     console.error('Erro na API /api/save-lead:', error);
