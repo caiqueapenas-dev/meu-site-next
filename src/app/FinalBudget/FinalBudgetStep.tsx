@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, MessageCircle, X, Minus, Plus } from 'lucide-react';
-import { Cart, UserData, Totals } from '../../types';
+import { Cart, UserData, Totals } from '../types';
 import FinalCartItem from './FinalCartItem';
 import DiscountModal from '../Modals/DiscountModal';
-import { services } from '../../data/services';
+import { services } from '../data/services';
 
 interface FinalBudgetStepProps {
   cart: Cart;

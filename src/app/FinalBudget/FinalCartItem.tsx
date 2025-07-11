@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Minus, Plus, X } from 'lucide-react';
-import { Service } from '../../types'; // Garanta que a importação do tipo Service está correta
+import { Service } from '../types'; // Garanta que a importação do tipo Service está correta
 
 interface FinalCartItemProps {
   serviceId: string;

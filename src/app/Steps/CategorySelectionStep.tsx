@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ArrowLeft, ArrowRight, Lock, RefreshCw } from 'lucide-react';
-import { services } from '../../data/services';
+import { services } from '../data/services';
 
 interface CategorySelectionStepProps {
   serviceType: 'recorrente' | 'avulso';

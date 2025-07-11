@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Plus, X, Minus, Info, Gift } from 'lucide-react';
-import { Service } from '../../types';
+import { Service } from '../types';
 
 interface ServiceCardProps {
   service: Service;

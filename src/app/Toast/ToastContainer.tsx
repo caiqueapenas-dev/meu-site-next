@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Toast } from '../../hooks/useToast';
+import { Toast } from '../hooks/useToast';
 import { CheckCircle, Info, XCircle, X } from 'lucide-react';
 
 interface ToastContainerProps {

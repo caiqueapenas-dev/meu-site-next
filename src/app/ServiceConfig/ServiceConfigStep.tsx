@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { services } from '../../data/services';
-import { Cart } from '../../types';
+import { services } from '../data/services';
+import { Cart } from '../types';
 import ServiceCard from './ServiceCard';
 import Modal from '../Modal/Modal';
 import InvestmentModal from '../Modals/InvestmentModal';
