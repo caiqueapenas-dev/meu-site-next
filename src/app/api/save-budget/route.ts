@@ -15,9 +15,9 @@ export async function POST(request: Request) {
 
     // Query para inserir o orçamento.
     const [result] = await connection.execute(
-      'INSERT INTO budgets (email, details) VALUES (?, ?)',
-      [email, budgetDetails]
-    );
+          'INSERT INTO budgets (user_email, budget_details) VALUES (?, ?)', // [!code ++]
+          [email, budgetDetails]
+        );
 
     connection.release();
 
