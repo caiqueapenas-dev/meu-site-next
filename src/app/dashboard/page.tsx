@@ -2,16 +2,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import EditLeadModal from './EditLeadModal'; 
+import { useRouter } from 'next/navigation'; // [!code ++]
+import EditLeadModal from './EditLeadModal';
 import { Lead } from '../types';
 
-
 export default function DashboardPage() {
+  const router = useRouter(); // [!code ++]
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false); // [!code ++]
-  const [currentLead, setCurrentLead] = useState<Lead | null>(null); // [!code ++]
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentLead, setCurrentLead] = useState<Lead | null>(null);
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login'); // Agora 'router' é conhecido
+  };
+
+<div className="flex justify-between items-center mb-8">
+    <h1 className="text-3xl font-bold text-white">Dashboard de Leads</h1>
+    <button
+        onClick={handleLogout}
+        className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md text-sm transition-colors"
+    >
+        Sair
+    </button>
+</div>
   // Função para buscar os dados da nossa API
   const fetchLeads = async () => {
     setIsLoading(true);
@@ -105,11 +121,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="bg-slate-900 min-h-screen p-8 text-slate-300">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-white">Dashboard de Leads</h1>
-        </div>
+  <div className="bg-slate-900 min-h-screen p-8 text-slate-300">
+    <div className="max-w-4xl mx-auto">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-white">Dashboard de Leads</h1>
+        <button
+            onClick={handleLogout}
+            className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md text-sm transition-colors"
+        >
+            Sair
+        </button>
+      </div>
 
         {leads.length === 0 ? (
           <div className="text-center bg-slate-800 p-10 rounded-lg">
