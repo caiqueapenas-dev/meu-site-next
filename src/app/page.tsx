@@ -201,7 +201,7 @@ export default function HomePage() {
                             </div>
                             <div className="text-[#022b3a]">
                                 <h3 className="text-3xl font-bold mb-4">Mais que um prestador de serviços, um parceiro de negócio.</h3>
-                                <p className="text-gray-700 leading-relaxed mb-4">Olá! Sou o Carlos. Minha paixão não é apenas marketing, é a causa da saúde. Me inspira ver como meu trabalho conecta informações valiosas de bem-estar a quem precisa, fortalecendo a relação entre clínicas, profissionais e seus pacientes.</p>
+                                <p className="text-gray-700 leading-relaxed mb-4">Olá! Me chamo Carlos. Minha paixão não é apenas marketing, é a causa da saúde. Me inspira ver como meu trabalho conecta informações valiosas de bem-estar a quem precisa, fortalecendo a relação entre clínicas, profissionais e seus pacientes.</p>
                                 <p className="text-gray-700 leading-relaxed mb-4">Como autodidata, minha bagagem em programação, filmmaking e música me deu uma visão 360º do mercado. Isso, somado a um estilo de vida focado em alta performance, me permite criar estratégias que funcionam de verdade.</p>
                                 <p className="font-semibold text-[#022b3a]">Minha filosofia é clara: respeito pelo seu tempo, dinheiro e história. Por isso, cada ação é pensada para ser direta e trazer resultados reais.</p>
                             </div>
